@@ -1,0 +1,139 @@
+$primary: red;
+
+.red {
+    color: $primary;
+}
+
+.hangman-container {
+	position: relative;
+	padding-left: 10rem;
+	padding-top: 8rem;
+	box-sizing: border-box;
+	height: calc(760px + 2rem);
+
+}
+
+.pole {
+	position: absolute;
+    //z-index: -1;
+	height: 750px;
+	top: 2rem;
+	left: 3rem;
+	border-left: 10px solid brown;
+	border-top: 10px solid brown;
+	width: 10rem;
+	&::after {
+		content: "";
+		height: 5.5rem;
+		width: 10px;
+		background: brown;
+		position: absolute;
+		right: 0;
+	}
+}
+
+.hangman {
+	/*BEM way of writing elements; SCSS code*/
+	position: relative;
+
+	&__element {
+		opacity: 0.25;
+        // & > *{
+        //     z-index:-1; /*Give all children a z-index of -1*/
+        // }
+		&:nth-child(1) {
+			/*First child is a circle*/
+			height: 100px;
+			width: 100px;
+			border-radius: 50%;
+			border: 10px solid black;
+
+            
+		}
+
+		// &:not(:first-child) {
+		// 	height: 100px;
+		// 	width: 10px;
+		// 	background: black;
+		// }
+
+		&:nth-child(2) {
+			position: absolute;
+			height: 300px;
+			width: 10px;
+			background: black;
+			left: 55px;
+            //z-index: -1;
+		}
+		&:nth-child(3) {
+			position: absolute;
+			height: 100px;
+			width: 10px;
+			background: black;
+			transform: rotate(45deg);
+			top: 150px;
+			left: 20px;
+            //z-index: -1;
+		}
+		&:nth-child(4) {
+			position: absolute;
+			height: 100px;
+			width: 10px;
+			background: black;
+			transform: rotate(-45deg);
+			top: 150px;
+			left: 90px;
+            //z-index: -1;
+		}
+		&:nth-child(5) {
+			position: absolute;
+			height: 100px;
+			width: 10px;
+			background: black;
+			transform: rotate(45deg);
+			top: 400px;
+			left: 20px;
+            //z-index: -1;
+		}
+		&:nth-child(6) {
+			position: absolute;
+			height: 100px;
+			width: 10px;
+			background: black;
+			transform: rotate(-45deg);
+			top: 400px;
+			left: 90px;
+            //z-index: -1;
+		}
+	}
+}
+@for $i from 1 through 6 { //6 states are created for each single life
+	.hangman-#{$i} {      //creating 6 different classes
+		@for $j from 1 through $i {
+			.hangman__element:nth-child(#{$j}) { //setting the opacity inside each class to 1
+				opacity: 1;
+			}
+		}
+
+		@if $i == 6 {
+			.hangman__element:nth-child(1){
+				&::after{
+					content: "● ●";
+					font-size: 3rem;
+					color: black;
+					position: absolute;
+	
+				}
+				&::before{
+					content:"(";
+					font-size: 3rem;
+					position: absolute;
+					font-weight: bold;
+					transform: rotate(90deg);
+					top: 60px;
+					left: 50px;
+				}
+			}
+		}
+	}
+}
